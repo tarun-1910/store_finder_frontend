@@ -1,0 +1,40 @@
+import { SearchBar } from "@/components/search/search-bar";
+import { publicApi } from "@/lib/api-client";
+import { SellerDirectory } from "@/components/sellers/seller-directory";
+
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  let sellers: Awaited<ReturnType<typeof publicApi.sellers>>["data"]["data"] = [];
+  let categories: Awaited<ReturnType<typeof publicApi.categories>>["data"]["data"] = [];
+
+  try {
+    const [sellersRes, catRes] = await Promise.all([
+      publicApi.sellers(),
+      publicApi.categories(),
+    ]);
+    sellers = sellersRes.data.data || [];
+    categories = catRes.data.data || [];
+  } catch (error) {
+    console.error("Error fetching homepage data server-side:", error);
+    // API may be offline during build
+  }
+
+  return (
+    <div>
+      <section className="bg-gradient-to-br from-emerald-50 via-white to-teal-50 py-20 px-4">
+        <div className="container mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+            Discover Online Sellers
+          </h1>
+          <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+            Find from local stores, home businesses & Instagram sellers.
+          </p>
+          <SearchBar large />
+        </div>
+      </section>
+
+      <SellerDirectory initialSellers={sellers} categories={categories} />
+    </div>
+  );
+}
