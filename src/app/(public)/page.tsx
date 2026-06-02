@@ -9,16 +9,21 @@ export default async function HomePage() {
   let categories: Awaited<ReturnType<typeof publicApi.categories>>["data"]["data"] = [];
 
   try {
-    const [sellersRes, catRes] = await Promise.all([
-      publicApi.sellers(),
-      publicApi.categories(),
-    ]);
-    sellers = sellersRes.data.data || [];
-    categories = catRes.data.data || [];
-  } catch (error) {
-    console.error("Error fetching homepage data server-side:", error);
-    // API may be offline during build
-  }
+  console.log("Loading homepage...");
+
+  const [sellersRes, catRes] = await Promise.all([
+    publicApi.sellers(),
+    publicApi.categories(),
+  ]);
+
+  console.log("Sellers API success");
+  console.log("Categories API success");
+
+  sellers = sellersRes.data.data || [];
+  categories = catRes.data.data || [];
+} catch (error) {
+  console.error("Homepage fetch failed:", error);
+}
 
   return (
     <div>
