@@ -4,10 +4,11 @@ import type {
   AuthResponse,
   Category,
   DashboardStats,
-  Product,
+  Product,    
   SellerCard,
   SellerDetail,
   StoreType,
+  PageResponse
 } from "./types";
 
 export const publicApi = {
@@ -15,14 +16,30 @@ export const publicApi = {
     api.get<ApiResponse<SellerCard[]>>("/api/v1/search", {
       params: { q, storeType, categoryId },
     }),
-  sellers: () => api.get<ApiResponse<SellerCard[]>>("/api/v1/sellers"),
+    sellers: (page = 0, size = 20) =>
+  api.get<ApiResponse<PageResponse<SellerCard>>>(
+    "/api/v1/sellers",
+    {
+      params: { page, size },
+    }
+  ),
+ 
   categories: () => api.get<ApiResponse<Category[]>>("/api/v1/categories"),
   category: (slug: string) => api.get<ApiResponse<Category>>(`/api/v1/categories/${slug}`),
   seller: (slug: string) => api.get<ApiResponse<SellerDetail>>(`/api/v1/sellers/${slug}`),
   sellerProducts: (id: number) =>
     api.get<ApiResponse<Product[]>>(`/api/v1/sellers/${id}/products`),
-  sellersByCategory: (slug: string) =>  
-    api.get<ApiResponse<SellerCard[]>>(`/api/v1/sellers/category/${slug}`),
+ sellersByCategory: (
+  slug: string,
+  page = 0,
+  size = 20
+) =>
+  api.get<ApiResponse<PageResponse<SellerCard>>>(
+    `/api/v1/sellers/category/${slug}`,
+    {
+      params: { page, size },
+    }
+  ),
 };
 
 export const adminApi = {

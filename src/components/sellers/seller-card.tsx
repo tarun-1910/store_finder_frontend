@@ -7,7 +7,7 @@ import type { SellerCard as SellerCardType } from "@/lib/types";
 
 export function SellerCard({ seller }: { seller: SellerCardType }) {
   return (
-    <Link href={`/seller/${seller.slug}`}>
+    <Link href={`/sellers/${seller.slug}`}>
       <Card className="hover:shadow-lg transition-shadow h-full">
         <CardContent className="p-4 flex gap-4">
           <SellerAvatar name={seller.businessName} logoUrl={seller.logoUrl} />

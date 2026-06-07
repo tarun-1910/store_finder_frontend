@@ -6,8 +6,7 @@ export default function ContactPage() {
         Have questions or want to list your business? Reach out to us.
       </p>
       <div className="space-y-2 text-sm">
-        <p><strong>Email:</strong> hello@storefinder.local</p>
-        <p><strong>City:</strong> Bangalore, Karnataka</p>
+        <p><strong>Email:</strong> support@storesutra.local</p>
       </div>
     </div>
   );

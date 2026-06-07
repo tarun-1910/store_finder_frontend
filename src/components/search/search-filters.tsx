@@ -8,9 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Category } from "@/lib/types";
 
-export function SearchFilters({ categories }: { categories: Category[] }) {
+
+export function SearchFilters() {
   const router = useRouter();
   const params = useSearchParams();
   const q = params.get("q") || "";
@@ -33,23 +33,12 @@ export function SearchFilters({ categories }: { categories: Category[] }) {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="ALL">All Stores</SelectItem>
-          <SelectItem value="ONLINE">Online Only</SelectItem>
-          <SelectItem value="OFFLINE">Offline Only</SelectItem>
-          <SelectItem value="BOTH">Online + Offline</SelectItem>
+          <SelectItem value="ONLINE">Online </SelectItem>
+          <SelectItem value="OFFLINE">Offline </SelectItem>
+          <SelectItem value="BOTH">Hybrid</SelectItem>
         </SelectContent>
       </Select>
 
-      <Select value={categoryId} onValueChange={(v) => v && update("categoryId", v)}>
-        <SelectTrigger className="w-[200px]">
-          <SelectValue placeholder="Category" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="ALL">All Categories</SelectItem>
-          {categories.map((c) => (
-            <SelectItem key={c.id} value={String(c.id)}>{c.name}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
     </div>
   );
 }

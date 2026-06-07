@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { email: "admin@storefinder.local", password: "admin123" },
+   
   });
 
   const onSubmit = async (data: FormData) => {

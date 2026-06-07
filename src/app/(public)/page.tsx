@@ -5,21 +5,24 @@ import { SellerDirectory } from "@/components/sellers/seller-directory";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  let sellers: Awaited<ReturnType<typeof publicApi.sellers>>["data"]["data"] = [];
+  let sellers = [];
   let categories: Awaited<ReturnType<typeof publicApi.categories>>["data"]["data"] = [];
+
+     console.log("HomePage rendered", Date.now());
+
 
   try {
   console.log("Loading homepage...");
 
   const [sellersRes, catRes] = await Promise.all([
-    publicApi.sellers(),
+    publicApi.sellers(0,20),
     publicApi.categories(),
   ]);
 
   console.log("Sellers API success");
   console.log("Categories API success");
 
-  sellers = sellersRes.data.data || [];
+  sellers =  sellersRes.data.data.content || [];
   categories = catRes.data.data || [];
 } catch (error) {
   console.error("Homepage fetch failed:", error);

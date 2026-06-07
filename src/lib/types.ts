@@ -4,7 +4,7 @@ export type EntityStatus = "ACTIVE" | "INACTIVE";
 export type Role = "SUPER_ADMIN" | "ADMIN";
 
 export interface ApiResponse<T> {
-  success: boolean;
+  success: boolean; 
   message: string;
   data: T;
 }  
@@ -88,4 +88,14 @@ export interface DashboardStats {
   totalCategories: number;
   totalSearches: number;
   topCategories: { categoryName: string; sellerCount: number }[];
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  last: boolean;
 }

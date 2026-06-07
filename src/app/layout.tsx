@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StoreFinder Bangalore | Discover Local Sellers",
-  description: "Discover products, services, and local businesses in Bangalore. Connect via WhatsApp, Instagram, and more.",
+  title: "StoreSutra - Discover Online Sellers Across India",
+  description:
+    "Find Instagram stores, WhatsApp sellers, YouTube businesses, boutiques, bakers, and local brands across India.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

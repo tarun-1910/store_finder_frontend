@@ -54,7 +54,7 @@ export default async function SearchPage({
       <SearchBar defaultQuery={q} />
       <div className="mt-6 mb-6">
         <Suspense fallback={null}>
-          <SearchFilters categories={categories} />
+          <SearchFilters  />
         </Suspense>
       </div>
       {q && <p className="text-sm text-muted-foreground mb-4">Showing results for: <strong>{q}</strong></p>}

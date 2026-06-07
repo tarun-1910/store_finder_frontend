@@ -25,7 +25,7 @@ export function AdminSidebar() {
 
   return (
     <aside className="w-56 border-r bg-slate-900 text-white min-h-screen p-4 flex flex-col">
-      <Link href="/admin/dashboard" className="font-bold text-lg mb-8 block">StoreFinder Admin</Link>
+      <Link href="/admin/dashboard" className="font-bold text-lg mb-8 block">StoreSutra Admin</Link>
       <nav className="flex-1 space-y-1">
         {links.map(({ href, label, icon: Icon }) => (
           <Link
