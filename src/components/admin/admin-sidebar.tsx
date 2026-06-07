@@ -24,8 +24,8 @@ export function AdminSidebar() {
   };
 
   return (
-    <aside className="w-56 border-r bg-slate-900 text-white min-h-screen p-4 flex flex-col">
-      <Link href="/admin/dashboard" className="font-bold text-lg mb-8 block">StoreSutra Admin</Link>
+    <aside className="w-56 border-r border-sidebar-border bg-sidebar text-sidebar-foreground min-h-screen p-4 flex flex-col">
+      <Link href="/admin/dashboard" className="font-bold text-lg mb-8 block text-sidebar-foreground">StoreSutra Admin</Link>
       <nav className="flex-1 space-y-1">
         {links.map(({ href, label, icon: Icon }) => (
           <Link
@@ -33,14 +33,14 @@ export function AdminSidebar() {
             href={href}
             className={cn(
               "flex items-center gap-2 px-3 py-2 rounded-lg text-sm",
-              pathname.startsWith(href) ? "bg-emerald-600" : "hover:bg-slate-800"
+              pathname.startsWith(href) ? "bg-sidebar-primary text-sidebar-primary-foreground" : "hover:bg-sidebar-accent"
             )}
           >
             <Icon className="h-4 w-4" /> {label}
           </Link>
         ))}
       </nav>
-      <button onClick={logout} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-slate-800 mt-4">
+      <button onClick={logout} className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-sidebar-accent mt-4">
         <LogOut className="h-4 w-4" /> Logout
       </button>
     </aside>

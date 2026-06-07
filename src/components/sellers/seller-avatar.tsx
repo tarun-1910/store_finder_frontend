@@ -17,19 +17,19 @@ export function SellerAvatar({
 
   if (!logoUrl || failed) {
     return (
-      <div className={`${sizeClass} shrink-0 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-emerald-600`}>
+      <div className={`${sizeClass} shrink-0 rounded-lg bg-brand-accent/15 flex items-center justify-center font-bold text-brand-main avatar-shadow`}>
         {name.charAt(0)}
       </div>
     );
   }
 
   return (
-    <div className={`relative ${sizeClass} shrink-0 rounded-lg overflow-hidden bg-slate-100`}>
+    <div className={`relative ${sizeClass} shrink-0 rounded-lg overflow-hidden bg-brand-cream avatar-shadow`}>
       <Image
         src={logoUrl}
         alt={name}
         fill
-        className="object-cover"
+        className="object-cover transition-transform duration-300 group-hover:scale-105"
         onError={() => setFailed(true)}
       />
     </div>

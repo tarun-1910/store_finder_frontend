@@ -26,11 +26,11 @@ export default function AdminSellersPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Sellers</h1>
-        <Link href="/admin/sellers/create" className="inline-flex items-center gap-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-medium">
+        <Link href="/admin/sellers/create" className="inline-flex items-center gap-2 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 text-sm font-medium">
           <Plus className="h-4 w-4" /> Add Seller
         </Link>
       </div>
-      <div className="bg-white rounded-lg border overflow-x-auto">
+      <div className="bg-card rounded-lg border overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -54,11 +54,11 @@ export default function AdminSellersPage() {
                   {s.featured && <Badge variant="secondary">Featured</Badge>}
                 </TableCell>
                 <TableCell className="flex gap-2">
-                  <Link href={`/admin/sellers/edit/${s.id}`} className="inline-flex p-2 hover:bg-slate-100 rounded">
+                  <Link href={`/admin/sellers/edit/${s.id}`} className="inline-flex p-2 hover:bg-muted rounded">
                     <Pencil className="h-4 w-4" />
                   </Link>
                   <Button size="icon" variant="ghost" onClick={() => deleteMutation.mutate(s.id)}>
-                    <Trash2 className="h-4 w-4 text-red-500" />
+                    <Trash2 className="h-4 w-4 text-brown-500" />
                   </Button>
                 </TableCell>
               </TableRow>

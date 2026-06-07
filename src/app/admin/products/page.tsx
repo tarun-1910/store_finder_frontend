@@ -45,7 +45,7 @@ export default function AdminProductsPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Products</h1>
-      <div className="bg-white p-6 rounded-lg border mb-8 max-w-xl space-y-3">
+      <div className="bg-card p-6 rounded-lg border mb-8 max-w-xl space-y-3">
         <h2 className="font-semibold">Add Product</h2>
         <div>
           <Label>Seller</Label>
@@ -60,11 +60,11 @@ export default function AdminProductsPage() {
         </div>
         <div><Label>Name</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1" /></div>
         <div><Label>Description</Label><Input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="mt-1" /></div>
-        <Button onClick={() => createMutation.mutate()} disabled={!form.sellerId || !form.name} className="bg-emerald-600 hover:bg-emerald-700">
+        <Button onClick={() => createMutation.mutate()} disabled={!form.sellerId || !form.name}>
           Add Product
         </Button>
       </div>
-      <div className="bg-white rounded-lg border overflow-x-auto">
+      <div className="bg-card rounded-lg border overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -82,7 +82,7 @@ export default function AdminProductsPage() {
                 <TableCell>{p.status}</TableCell>
                 <TableCell>
                   <Button size="icon" variant="ghost" onClick={() => deleteMutation.mutate(p.id)}>
-                    <Trash2 className="h-4 w-4 text-red-500" />
+                    <Trash2 className="h-4 w-4 text-brown-500" />
                   </Button>
                 </TableCell>
               </TableRow>

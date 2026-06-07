@@ -19,7 +19,7 @@ async function SearchResults({ searchParams }: { searchParams: Promise<{ q?: str
     const res = await publicApi.search(q, filters.storeType, filters.categoryId);
     sellers = res.data.data;
   } catch {
-    return <p className="text-red-600">Could not load results. Is the API running?</p>;
+    return <p className="text-brown-500">Could not load results. Is the API running?</p>;
   }
 
   if (sellers.length === 0) {
