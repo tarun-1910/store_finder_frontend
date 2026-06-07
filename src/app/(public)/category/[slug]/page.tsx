@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SellerCard } from "@/components/sellers/seller-card";
 import { publicApi } from "@/lib/api-client";
+import type { SellerCard as SellerCardType } from "@/lib/types";
 
 export default async function CategoryPage({
   params,
@@ -16,7 +17,7 @@ export default async function CategoryPage({
   const page = Number(sp.page ?? "0");
 
   let category;
-  let sellers = [];
+  let sellers: SellerCardType[] = [];
   let totalPages = 0;
   let totalElements = 0;
 

@@ -1,11 +1,12 @@
 import { SearchBar } from "@/components/search/search-bar";
 import { publicApi } from "@/lib/api-client";
 import { SellerDirectory } from "@/components/sellers/seller-directory";
+import type { SellerCard } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  let sellers = [];
+  let sellers: SellerCard[] = [];
   let categories: Awaited<ReturnType<typeof publicApi.categories>>["data"]["data"] = [];
 
      console.log("HomePage rendered", Date.now());
