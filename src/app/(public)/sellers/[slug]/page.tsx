@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { BadgeCheck, Star, MapPin, Phone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { CategoryTag } from "@/components/ui/category-tag";
 import { StoreTypeBadge } from "@/components/sellers/store-type-badge";
 import { SellerAvatar } from "@/components/sellers/seller-avatar";
+import { getExternalLinkClasses } from "@/lib/colors";
 import { publicApi } from "@/lib/api-client";
 import { notFound } from "next/navigation";
 
@@ -29,17 +31,17 @@ export default async function SellerPage({ params }: { params: Promise<{ slug: s
 
 
   const externalLinks = [
-    { label: "Chat on WhatsApp", url: seller.whatsappUrl, variant: "outline" as const },
-    { label: "Open Instagram", url: seller.instagramUrl, variant: "default" as const },
-    { label: "Visit Website", url: seller.websiteUrl, variant: "outline" as const },
-    { label: "Watch on YouTube", url: seller.youtubeUrl, variant: "outline" as const },
-    { label: "Open Facebook", url: seller.facebookUrl, variant: "outline" as const }
+    { label: "Chat on WhatsApp", url: seller.whatsappUrl },
+    { label: "Open Instagram", url: seller.instagramUrl },
+    { label: "Visit Website", url: seller.websiteUrl },
+    { label: "Watch on YouTube", url: seller.youtubeUrl },
+    { label: "Open Facebook", url: seller.facebookUrl },
   ].filter((l) => l.url);
 
   return (
     <div>
       {seller.coverUrl && (
-        <div className="relative h-48 md:h-64 w-full bg-slate-200">
+        <div className="relative h-48 md:h-64 w-full bg-indian-brown/10">
           <Image src={seller.coverUrl} alt="" fill className="object-cover" priority />
         </div>
       )}
@@ -49,12 +51,12 @@ export default async function SellerPage({ params }: { params: Promise<{ slug: s
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-3xl font-bold">{seller.businessName}</h1>
-              {seller.verified && <BadgeCheck className="h-6 w-6 text-blue-500" />}
-              {seller.featured && <Star className="h-6 w-6 text-amber-500 fill-amber-500" />}
+              {seller.verified && <BadgeCheck className="h-6 w-6 text-brand-accent" />}
+              {seller.featured && <Star className="h-6 w-6 text-brand-yellow fill-brand-yellow" />}
             </div>
             <p className="text-muted-foreground mt-2">{seller.description}</p>
             <div className="flex flex-wrap gap-2 mt-4">
-              <span className="text-sm bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">{seller.categoryName}</span>
+              <CategoryTag name={seller.categoryName} className="text-sm px-3 py-1 rounded-full" />
               <StoreTypeBadge storeType={seller.storeType} />
             </div>
             <div className="mt-4 space-y-1 text-sm text-muted-foreground">
@@ -65,7 +67,7 @@ export default async function SellerPage({ params }: { params: Promise<{ slug: s
             {seller.tags?.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {seller.tags.map((t) => (
-                  <Link key={t} href={`/search?q=${encodeURIComponent(t)}`} className="text-xs border px-2 py-1 rounded hover:bg-slate-50">
+                  <Link key={t} href={`/search?q=${encodeURIComponent(t)}`} className="text-xs border border-brand-main/20 text-brand-main px-2 py-1 rounded hover:bg-brand-accent/15">
                     #{t}
                   </Link>
                 ))}
@@ -81,11 +83,7 @@ export default async function SellerPage({ params }: { params: Promise<{ slug: s
               href={link.url!}
               target="_blank"
               rel="noopener noreferrer"
-              className={
-                link.variant === "default"
-                  ? "inline-flex items-center justify-center rounded-md bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-medium"
-                  : "inline-flex items-center justify-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-slate-50"
-              }
+              className={getExternalLinkClasses(link.label)}
             >
               {link.label}
             </a>
@@ -100,7 +98,7 @@ export default async function SellerPage({ params }: { params: Promise<{ slug: s
                 <Card key={p.id}>
                   <CardContent className="p-4">
                     {p.imageUrl && (
-                      <div className="relative h-32 w-full rounded-lg overflow-hidden mb-3 bg-slate-100">
+                      <div className="relative h-32 w-full rounded-lg overflow-hidden mb-3 bg-indian-cream">
                         <Image src={p.imageUrl} alt={p.name} fill className="object-cover" />
                       </div>
                     )}

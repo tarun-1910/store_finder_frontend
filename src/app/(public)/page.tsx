@@ -31,12 +31,19 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="bg-gradient-to-br from-emerald-50 via-white to-teal-50 py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-            Discover Online Sellers
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-main to-brand-accent py-24 px-4 hero-shadow">
+        {/* Ambient Glows */}
+        <div className="absolute top-[-20%] left-[-15%] w-[450px] h-[450px] rounded-full bg-brand-yellow/15 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-30%] right-[-10%] w-[500px] h-[500px] rounded-full bg-brand-highlight/20 blur-[130px] pointer-events-none" />
+
+        <div className="container mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 text-brand-yellow border border-white/15 mb-6 backdrop-blur-sm tracking-wide uppercase">
+            <span>✨</span> India's Premium Seller Directory
+          </div>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+            Discover <span className="bg-gradient-to-r from-brand-yellow to-brand-highlight bg-clip-text text-transparent">Online Sellers</span>
           </h1>
-          <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+          <p className="text-lg md:text-xl text-white/85 mb-8 max-w-2xl mx-auto font-medium">
             Find from local stores, home businesses & Instagram sellers.
           </p>
           <SearchBar large />

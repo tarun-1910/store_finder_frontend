@@ -7,6 +7,26 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* Brand Scale colors */
+  --color-brand-main: var(--brand-main);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-highlight: var(--brand-highlight);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-gray: var(--brand-gray);
+  /* Brown scale mapped for fallback */
+  --color-brown-500: var(--brown-500);
+  --color-brown-400: var(--brown-400);
+  --color-brown-300: var(--brown-300);
+  --color-brown-200: var(--brown-200);
+  --color-brown-150: var(--brown-150);
+  /* Legacy aliases (mapped to brand scale) */
+  --color-indian-brown: var(--indian-brown);
+  --color-indian-turmeric: var(--indian-turmeric);
+  --color-indian-cream: var(--indian-cream);
+  --color-indian-sindoor: var(--brown-500);
+  --color-indian-indigo: var(--brown-400);
+  --color-indian-mehndi: var(--brown-500);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
@@ -49,38 +69,62 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  /* ── Brand Theme Colors ── */
+  --brand-main: #003049;
+  --brand-accent: #d62828;
+  --brand-highlight: #f77f00;
+  --brand-yellow: #fcbf49;
+  --brand-cream: #eae2b7;
+  --brand-gray: #dcd6b2;
+
+  /* ── Mapped Brown Scale ── */
+  --brown-500: var(--brand-accent);
+  --brown-400: var(--brand-highlight);
+  --brown-300: var(--brand-highlight);
+  --brown-200: var(--brand-accent);
+  --brown-150: var(--brand-accent);
+
+  /* ── Legacy aliases ── */
+  --indian-brown: var(--brand-main);
+  --indian-turmeric: var(--brand-yellow);
+  --indian-cream: var(--brand-cream);
+  --indian-sindoor: var(--brand-accent);
+  --indian-indigo: var(--brand-highlight);
+  --indian-mehndi: var(--brand-highlight);
+
+  /* ── Semantic tokens ── */
+  --background: var(--brand-cream);
+  --foreground: var(--brand-main);
+  --card: #ffffff;
+  --card-foreground: var(--brand-main);
+  --popover: #ffffff;
+  --popover-foreground: var(--brand-main);
+  --primary: var(--brand-main);
+  --primary-foreground: var(--brand-cream);
+  --secondary: var(--brand-accent);
+  --secondary-foreground: var(--brand-cream);
+  --muted: var(--brand-highlight);
+  --muted-foreground: var(--brand-main);
+  --accent: var(--brand-accent);
+  --accent-foreground: var(--brand-cream);
+  --destructive: var(--brand-accent);
+  --border: var(--brand-gray);
+  --input: var(--brand-gray);
+  --ring: var(--brand-yellow);
+  --chart-1: var(--brand-yellow);
+  --chart-2: var(--brand-accent);
+  --chart-3: var(--brand-main);
+  --chart-4: var(--brand-highlight);
+  --chart-5: var(--brand-yellow);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--brand-main);
+  --sidebar-foreground: var(--brand-cream);
+  --sidebar-primary: var(--brand-yellow);
+  --sidebar-primary-foreground: var(--brand-main);
+  --sidebar-accent: var(--brand-accent);
+  --sidebar-accent-foreground: var(--brand-cream);
+  --sidebar-border: var(--brand-accent);
+  --sidebar-ring: var(--brand-yellow);
 }
 
 .dark {
@@ -121,10 +165,88 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
+}
+
+/* ===== Premium Shadow System ===== */
+
+/* Search bar shadows */
+.search-shadow-wrapper {
+  box-shadow: 0 6px 20px rgba(0, 48, 73, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.search-shadow-wrapper:hover {
+  box-shadow: 0 10px 28px rgba(0, 48, 73, 0.2);
+  transform: translateY(-1px);
+}
+
+.search-shadow-wrapper:focus-within {
+  box-shadow: 0 12px 36px rgba(0, 48, 73, 0.25);
+  transform: translateY(-1px);
+}
+
+.search-button-shadow {
+  box-shadow: 0 6px 20px rgba(0, 48, 73, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+.search-button-shadow:hover {
+  box-shadow: 0 10px 28px rgba(0, 48, 73, 0.25);
+  transform: translateY(-1px);
+}
+
+.search-button-shadow:active {
+  box-shadow: 0 2px 8px rgba(0, 48, 73, 0.1);
+  transform: translateY(0);
+}
+
+/* Header shadow — subtle drop below the sticky navbar */
+.header-shadow {
+  box-shadow: 0 4px 16px rgba(0, 48, 73, 0.06);
+}
+
+/* Hero section — inner depth glow + bottom edge shadow for section separation */
+.hero-shadow {
+  box-shadow:
+    inset 0 -40px 60px -20px rgba(0, 48, 73, 0.1),
+    0 8px 32px -4px rgba(0, 48, 73, 0.15);
+}
+
+/* Seller card shadows — warm lift on hover */
+.card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 48, 73, 0.04);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card-shadow:hover {
+  box-shadow: 0 8px 28px rgba(0, 48, 73, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Category filter pill shadows */
+.pill-shadow {
+  box-shadow: 0 2px 6px rgba(0, 48, 73, 0.04);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.pill-shadow:hover {
+  box-shadow: 0 4px 14px rgba(0, 48, 73, 0.08);
+  transform: translateY(-1px);
+}
+
+.pill-shadow-active {
+  box-shadow: 0 3px 12px rgba(247, 127, 0, 0.35);
+}
+
+/* Seller avatar shadow */
+.avatar-shadow {
+  box-shadow: 0 2px 10px rgba(0, 48, 73, 0.06);
 }

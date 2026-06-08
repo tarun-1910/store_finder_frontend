@@ -78,7 +78,7 @@ export function SellerForm({ seller }: SellerFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-2xl bg-white p-6 rounded-lg border">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-2xl bg-card p-6 rounded-lg border">
       <div><Label>Business Name</Label><Input {...register("businessName", { required: true })} className="mt-1" /></div>
       <div><Label>Description</Label><Textarea {...register("description")} className="mt-1" /></div>
       <div>
@@ -152,7 +152,7 @@ export function SellerForm({ seller }: SellerFormProps) {
         <label className="flex items-center gap-2"><input type="checkbox" {...register("featured")} /> Featured</label>
       </div>
       <div className="flex gap-2">
-        <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700">Save</Button>
+        <Button type="submit">Save</Button>
         <Button type="button" variant="outline" onClick={() => router.back()}>Cancel</Button>
       </div>
     </form>

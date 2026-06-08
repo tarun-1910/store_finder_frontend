@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const SUGGESTIONS = [
-  "Sarees",
-  "Furniture",
-  "Jewelry",
+  { name: "Sarees", emoji: "👗" },
+  { name: "Furniture", emoji: "🛋️" },
+  { name: "Jewelry", emoji: "💎" },
 ];
 
 export function SearchBar({
@@ -21,6 +21,7 @@ export function SearchBar({
 }) {
   const router = useRouter();
   const [query, setQuery] = useState(defaultQuery);
+  const fieldSize = large ? "h-14 text-lg" : "h-10";
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,22 +37,19 @@ export function SearchBar({
 
   return (
     <div className={large ? "w-full max-w-2xl mx-auto" : "w-full"}>
-      <form onSubmit={handleSearch} className="flex gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-
+      <form onSubmit={handleSearch} className="flex items-center gap-2">
+        <div className="relative flex-1 rounded-full search-shadow-wrapper">
+          <Search className={`absolute ${large ? "left-4" : "left-3.5"} top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground z-10`} />
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search sarees, jewelry, furniture..."
-            className={`pl-10 ${large ? "h-14 text-lg" : ""}`}
+            className={`bg-white border-white/80 rounded-full ${large ? "pl-12" : "pl-11"} ${fieldSize} w-full focus-visible:ring-0`}
           />
         </div>
-
         <Button
           type="submit"
-          size={large ? "lg" : "default"}
-          className="bg-emerald-600 hover:bg-emerald-700"
+          className={`shrink-0 bg-brand-highlight text-white hover:text-white hover:bg-brand-accent border border-brand-accent/30 rounded-full ${fieldSize} ${large ? "px-6" : "px-4"} search-button-shadow font-semibold`}
         >
           Search
         </Button>
@@ -59,20 +57,23 @@ export function SearchBar({
 
       {large && (
         <div className="flex flex-wrap gap-2 mt-4 justify-center">
-          {SUGGESTIONS.map((suggestion) => (
+          {SUGGESTIONS.map(({ name, emoji }) => (
             <button
-              key={suggestion}
+              key={name}
               type="button"
               onClick={() =>
                 router.push(
                   `/search?q=${encodeURIComponent(
-                    suggestion
+                    name
                   )}&page=0`
                 )
               }
-              className="text-sm px-3 py-1 rounded-full bg-white border hover:bg-emerald-50"
+              className={`text-sm px-3.5 py-1.5 rounded-full border transition-all duration-250 cursor-pointer hover:scale-105 ${large
+                ? "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40"
+                : "bg-card border-border hover:bg-brand-accent/15 hover:border-brand-accent/40 text-foreground"
+                }`}
             >
-              {suggestion}
+              <span className="mr-1">{emoji}</span> {name}
             </button>
           ))}
         </div>
