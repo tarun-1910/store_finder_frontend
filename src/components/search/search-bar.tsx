@@ -6,11 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const SUGGESTIONS = [
-  { name: "Sarees", emoji: "👗" },
-  { name: "Furniture", emoji: "🛋️" },
-  { name: "Jewelry", emoji: "💎" },
-];
+
 
 export function SearchBar({
   defaultQuery = "",
@@ -54,30 +50,6 @@ export function SearchBar({
           Search
         </Button>
       </form>
-
-      {large && (
-        <div className="flex flex-wrap gap-2 mt-4 justify-center">
-          {SUGGESTIONS.map(({ name, emoji }) => (
-            <button
-              key={name}
-              type="button"
-              onClick={() =>
-                router.push(
-                  `/search?q=${encodeURIComponent(
-                    name
-                  )}&page=0`
-                )
-              }
-              className={`text-sm px-3.5 py-1.5 rounded-full border transition-all duration-250 cursor-pointer hover:scale-105 ${large
-                ? "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40"
-                : "bg-card border-border hover:bg-brand-accent/15 hover:border-brand-accent/40 text-foreground"
-                }`}
-            >
-              <span className="mr-1">{emoji}</span> {name}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
