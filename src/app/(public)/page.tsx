@@ -10,7 +10,7 @@ export default async function HomePage() {
   let categories: Awaited<ReturnType<typeof publicApi.categories>>["data"]["data"] = [];
 
      console.log("HomePage rendered", Date.now());
-
+                                                                
 
   try {
   console.log("Loading homepage...");
