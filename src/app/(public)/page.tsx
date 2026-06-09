@@ -35,20 +35,22 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-main to-brand-accent py-24 px-4 hero-shadow">
+      <section className="relative overflow-hidden py-28 px-4 bg-white border-b border-neutral-100">
+        {/* Subtle mesh background grid */}
+        <div className="absolute inset-0 opacity-25 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" />
         {/* Ambient Glows */}
-        <div className="absolute top-[-20%] left-[-15%] w-[450px] h-[450px] rounded-full bg-brand-yellow/15 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-30%] right-[-10%] w-[500px] h-[500px] rounded-full bg-brand-highlight/20 blur-[130px] pointer-events-none" />
+        <div className="absolute top-[-20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-brand-yellow/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-brand-highlight/10 blur-[100px] pointer-events-none" />
 
         <div className="container mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 text-brand-yellow border border-white/15 mb-6 backdrop-blur-sm tracking-wide uppercase">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-main/5 text-brand-main border border-brand-main/10 mb-6 backdrop-blur-sm tracking-wide uppercase">
             <span>✨</span> India's Premium Seller Directory
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-tight">
-            Discover <span className="bg-gradient-to-r from-brand-yellow to-brand-highlight bg-clip-text text-transparent">Online Sellers</span>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-brand-main mb-6 tracking-tight leading-none">
+            Find the <span className="bg-gradient-to-r from-brand-highlight to-brand-yellow bg-clip-text text-transparent">hidden gems</span> <br /> of Indian commerce
           </h1>
-          <p className="text-lg md:text-xl text-white/85 mb-8 max-w-2xl mx-auto font-medium">
-            Find from local stores, home businesses & Instagram sellers.
+          <p className="text-base sm:text-lg md:text-xl text-brand-main/70 mb-8 max-w-2xl mx-auto font-medium leading-relaxed">
+            Find and connect directly with local boutiques, home businesses, craft bakers, and Instagram brands.
           </p>
           <SearchBar large />
         </div>

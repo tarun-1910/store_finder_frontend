@@ -12,21 +12,15 @@ import { notFound } from "next/navigation";
 export default async function SellerPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   let seller;
- let products = [];   
 
- try {
-  const sellerResponse = await publicApi.seller(slug);
-  console.log("SELLER OK", sellerResponse.data);
-
-  seller = sellerResponse.data.data;
-
-    const productsResponse = await publicApi.sellerProducts(seller.id);
-    console.log("PRODUCTS OK", productsResponse.data);
-     products = productsResponse.data.data;
-} catch (error) {
-  console.error(error);
-  throw error;
-}
+  try {
+    const sellerResponse = await publicApi.seller(slug);
+    console.log("SELLER OK", sellerResponse.data);
+    seller = sellerResponse.data.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 
 
 
@@ -90,26 +84,7 @@ export default async function SellerPage({ params }: { params: Promise<{ slug: s
           ))}
         </div>
 
-        {products.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-xl font-bold mb-4">Products & Services</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {products.map((p) => (
-                <Card key={p.id}>
-                  <CardContent className="p-4">
-                    {p.imageUrl && (
-                      <div className="relative h-32 w-full rounded-lg overflow-hidden mb-3 bg-indian-cream">
-                        <Image src={p.imageUrl} alt={p.name} fill className="object-cover" />
-                      </div>
-                    )}
-                    <h3 className="font-semibold">{p.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{p.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
-        )}
+
       </div>
     </div>
   );

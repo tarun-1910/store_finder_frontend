@@ -93,7 +93,7 @@
   --indian-mehndi: var(--brand-highlight);
 
   /* ── Semantic tokens ── */
-  --background: var(--brand-cream);
+  --background: #ffffff;
   --foreground: var(--brand-main);
   --card: #ffffff;
   --card-foreground: var(--brand-main);
