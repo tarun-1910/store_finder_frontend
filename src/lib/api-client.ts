@@ -42,6 +42,21 @@ export const publicApi = {
   ),
 };
 
+/**
+ * Fire-and-forget tracking call. Never throws — failures are silently ignored
+ * so UI interactions are never blocked by analytics errors.
+ */
+export function trackEvent(
+  slug: string,
+  event: "redirect_click" | "search_conversion",
+  platform?: "whatsapp" | "instagram" | "website" | "youtube" | "facebook"
+): void {
+  const url = platform
+    ? `/api/v1/sellers/${slug}/track?event=${event}&platform=${platform}`
+    : `/api/v1/sellers/${slug}/track?event=${event}`;
+  fetch(url, { method: "POST" }).catch(() => {/* silently ignore */});
+}
+
 export const adminApi = {
   login: (email: string, password: string) =>   
     api.post<ApiResponse<AuthResponse>>("/api/v1/admin/auth/login", { email, password }),

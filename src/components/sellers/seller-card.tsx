@@ -9,6 +9,7 @@ import { StoreTypeBadge } from "./store-type-badge";
 import { SellerAvatar } from "./seller-avatar";
 import type { SellerCard as SellerCardType } from "@/lib/types";
 import { useSellerModal } from "./seller-modal";
+import { trackEvent } from "@/lib/api-client";
 
 // Helper to generate a unique gradient based on the seller name hash
 function getGradientClass(name: string) {
@@ -34,6 +35,10 @@ export function SellerCard({ seller }: { seller: SellerCardType }) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (e.metaKey || e.ctrlKey || e.button === 1) return;
     e.preventDefault();
+    // Fire search_conversion only when the user arrived via a search query
+    if (typeof window !== "undefined" && new URLSearchParams(window.location.search).has("q")) {
+      trackEvent(seller.slug, "search_conversion");
+    }
     openSeller(seller.slug);
   };
 

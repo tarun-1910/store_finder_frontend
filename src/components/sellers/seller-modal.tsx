@@ -11,7 +11,7 @@ import { CategoryTag } from "@/components/ui/category-tag";
 import { StoreTypeBadge } from "./store-type-badge";
 import { SellerAvatar } from "./seller-avatar";
 import { getExternalLinkClasses } from "@/lib/colors";
-import { publicApi } from "@/lib/api-client";
+import { publicApi, trackEvent } from "@/lib/api-client";
 import { cn } from "@/lib/utils";
 
 // Custom simple SVG icons to avoid lucide-react brand icon version issues
@@ -294,13 +294,15 @@ function SellerModal() {
   );
 }
 
+type Platform = "whatsapp" | "instagram" | "website" | "youtube" | "facebook";
+
 function renderExternalLinks(seller: any) {
-  const externalLinks = [
-    { label: "Chat on WhatsApp", url: seller.whatsappUrl, icon: WhatsAppIcon },
-    { label: "Open Instagram", url: seller.instagramUrl, icon: InstagramIcon },
-    { label: "Visit Website", url: seller.websiteUrl, icon: Globe },
-    { label: "Watch on YouTube", url: seller.youtubeUrl, icon: YoutubeIcon },
-    { label: "Open Facebook", url: seller.facebookUrl, icon: FacebookIcon },
+  const externalLinks: { label: string; url: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; platform: Platform }[] = [
+    { label: "Chat on WhatsApp", url: seller.whatsappUrl, icon: WhatsAppIcon, platform: "whatsapp" },
+    { label: "Open Instagram",   url: seller.instagramUrl, icon: InstagramIcon, platform: "instagram" },
+    { label: "Visit Website",    url: seller.websiteUrl,  icon: Globe,          platform: "website" },
+    { label: "Watch on YouTube", url: seller.youtubeUrl,  icon: YoutubeIcon,    platform: "youtube" },
+    { label: "Open Facebook",    url: seller.facebookUrl, icon: FacebookIcon,   platform: "facebook" },
   ].filter((l) => l.url);
 
   if (externalLinks.length === 0) return null;
@@ -319,6 +321,7 @@ function renderExternalLinks(seller: any) {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent(seller.slug, "redirect_click", link.platform)}
               className={cn(
                 getExternalLinkClasses(link.label),
                 "text-xs px-4 py-2.5 rounded-xl font-bold shadow-sm flex items-center gap-2 hover:scale-[1.03] active:scale-95 transition-all duration-200 cursor-pointer"
