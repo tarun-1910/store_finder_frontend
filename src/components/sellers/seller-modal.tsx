@@ -297,12 +297,12 @@ function SellerModal() {
 type Platform = "whatsapp" | "instagram" | "website" | "youtube" | "facebook";
 
 function renderExternalLinks(seller: any) {
-  const externalLinks: { label: string; url: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; platform: Platform }[] = [
-    { label: "Chat on WhatsApp", url: seller.whatsappUrl, icon: WhatsAppIcon, platform: "whatsapp" },
-    { label: "Open Instagram",   url: seller.instagramUrl, icon: InstagramIcon, platform: "instagram" },
-    { label: "Visit Website",    url: seller.websiteUrl,  icon: Globe,          platform: "website" },
-    { label: "Watch on YouTube", url: seller.youtubeUrl,  icon: YoutubeIcon,    platform: "youtube" },
-    { label: "Open Facebook",    url: seller.facebookUrl, icon: FacebookIcon,   platform: "facebook" },
+  const externalLinks = [
+    { label: "Chat on WhatsApp", url: seller.whatsappUrl, icon: WhatsAppIcon, platform: "whatsapp" as Platform },
+    { label: "Open Instagram",   url: seller.instagramUrl, icon: InstagramIcon, platform: "instagram" as Platform },
+    { label: "Visit Website",    url: seller.websiteUrl,  icon: Globe,          platform: "website" as Platform },
+    { label: "Watch on YouTube", url: seller.youtubeUrl,  icon: YoutubeIcon,    platform: "youtube" as Platform },
+    { label: "Open Facebook",    url: seller.facebookUrl, icon: FacebookIcon,   platform: "facebook" as Platform },
   ].filter((l) => l.url);
 
   if (externalLinks.length === 0) return null;
