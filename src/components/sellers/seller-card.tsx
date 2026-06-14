@@ -46,7 +46,7 @@ export function SellerCard({ seller }: { seller: SellerCardType }) {
 
   return (
     <Link href={`/sellers/${seller.slug}`} onClick={handleClick} className="block h-full">
-      <Card className="card-shadow h-full group border border-neutral-200/80 hover:border-brand-highlight/40 rounded-2xl overflow-hidden transition-all duration-300 bg-white flex flex-col">
+      <Card className="h-full group border border-neutral-200/70 hover:border-brand-highlight/40 rounded-2xl overflow-hidden transition-all duration-300 bg-white flex flex-col shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] hover:-translate-y-1">
         {/* Card Header Gradient / Cover */}
         <div className={`h-28 bg-gradient-to-br ${gradient} relative transition-all duration-300 group-hover:opacity-95 shrink-0`}>
           {/* Subtle mesh background overlay */}
@@ -92,9 +92,18 @@ export function SellerCard({ seller }: { seller: SellerCardType }) {
           </div>
 
           {/* Area & Phone footer */}
-          <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between text-xs text-brand-main/60">
-            <span className="flex items-center gap-1 truncate"><MapPin className="h-3.5 w-3.5 text-brand-highlight shrink-0" />{seller.area}</span>
-            <span className="flex items-center gap-1 font-semibold shrink-0"><Phone className="h-3.5 w-3.5 text-brand-accent shrink-0" />{seller.phone}</span>
+          <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-start text-xs">
+            {seller.phone ? (
+              <span className="flex items-center gap-1 font-semibold shrink-0 text-brand-main/70">
+                <Phone className="h-3.5 w-3.5 text-brand-accent shrink-0" />
+                {seller.phone}
+              </span>
+            ) : (
+              <span className="flex items-center gap-1 shrink-0 text-brand-main/40" title="No phone listed">
+                <Phone className="h-3.5 w-3.5 text-brand-main/20 shrink-0" />
+                Not Listed
+              </span>
+            )}
           </div>
         </CardContent>
       </Card>

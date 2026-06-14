@@ -65,7 +65,7 @@ async function SearchResults({ searchParams }: { searchParams: Promise<{ q?: str
           Results ({sellers.length} {sellers.length === 1 ? "store" : "stores"} found)
         </h2>
       </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         {sellers.map((s) => (
           <SellerCard key={s.id} seller={s} />
         ))}
@@ -112,7 +112,7 @@ export default async function SearchPage({
           </div>
 
           <Suspense fallback={
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="h-80 bg-neutral-50 border border-neutral-100 rounded-2xl animate-pulse" />
               ))}

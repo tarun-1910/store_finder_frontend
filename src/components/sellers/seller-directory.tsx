@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { Grid, ChevronRight } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { SellerCard } from "./seller-card";
 import { getCategoryEmoji } from "@/lib/colors";
 import type { Category, SellerCard as SellerCardType } from "@/lib/types";
@@ -11,39 +11,99 @@ import { publicApi } from "@/lib/api-client";
 interface SellerDirectoryProps {
   initialSellers: SellerCardType[];
   categories: Category[];
+  initialTotalPages: number;
+  initialTotalElements: number;
 }
 
 export function SellerDirectory({
   initialSellers,
   categories,
+  initialTotalPages,
+  initialTotalElements,
 }: SellerDirectoryProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const directoryRef = useRef<HTMLDivElement>(null);
   const [atEnd, setAtEnd] = useState(false);
   const [isGridView, setIsGridView] = useState(false);
   
-  // Client state for in-place category filtering
+  // Client state for in-place category filtering and pagination
   const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
   const [displayedSellers, setDisplayedSellers] = useState<SellerCardType[]>(initialSellers);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(initialTotalPages);
+  const [totalElements, setTotalElements] = useState(initialTotalElements);
+
+  const loadSellers = async (categorySlug: string | null, page: number) => {
+    setIsLoading(true);
+    try {
+      let res;
+      if (categorySlug === null) {
+        res = await publicApi.sellers(page, 20);
+      } else {
+        res = await publicApi.sellersByCategory(categorySlug, page, 20);
+      }
+      const data = res.data.data;
+      setDisplayedSellers(data.content || []);
+      setTotalPages(data.totalPages || 0);
+      setTotalElements(data.totalElements || 0);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Failed to load sellers:", error);
+      setDisplayedSellers([]);
+      setTotalPages(0);
+      setTotalElements(0);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleCategorySelect = async (slug: string | null) => {
-    if (slug === null) {
-      setSelectedCategorySlug(null);
-      setDisplayedSellers(initialSellers);
+    setSelectedCategorySlug(slug);
+    await loadSellers(slug, 0);
+  };
+
+  const handlePageChange = async (newPage: number) => {
+    await loadSellers(selectedCategorySlug, newPage);
+    if (directoryRef.current) {
+      directoryRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const [pageInputVal, setPageInputVal] = useState(String(currentPage + 1));
+
+  useEffect(() => {
+    setPageInputVal(String(currentPage + 1));
+  }, [currentPage]);
+
+  const handlePageInputSubmit = () => {
+    let targetPage = parseInt(pageInputVal, 10);
+    
+    if (isNaN(targetPage)) {
+      setPageInputVal(String(currentPage + 1));
       return;
     }
 
-    setSelectedCategorySlug(slug);
-    setIsLoading(true);
-    try {
-      const res = await publicApi.sellersByCategory(slug, 0, 50);
-      const content = res.data.data.content || [];
-      setDisplayedSellers(content);
-    } catch (error) {
-      console.error("Failed to load category sellers in-place:", error);
-      setDisplayedSellers([]);
-    } finally {
-      setIsLoading(false);
+    if (targetPage > totalPages) {
+      targetPage = totalPages;
+    }
+    
+    if (targetPage < 1) {
+      targetPage = 1;
+    }
+
+    setPageInputVal(String(targetPage));
+    const targetPageIndex = targetPage - 1;
+    
+    if (targetPageIndex !== currentPage) {
+      handlePageChange(targetPageIndex);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handlePageInputSubmit();
+      e.currentTarget.blur();
     }
   };
 
@@ -73,7 +133,7 @@ export function SellerDirectory({
   const activeCategory = categories.find((c) => c.slug === selectedCategorySlug);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div ref={directoryRef} className="container mx-auto px-4 py-8">
       {/* Categories Selector */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4 border-b border-neutral-100 pb-3">
@@ -221,26 +281,18 @@ export function SellerDirectory({
           <h2 className="text-xl sm:text-2xl font-extrabold text-brand-main tracking-tight">
             {activeCategory ? `${activeCategory.name} Sellers` : "Featured Sellers"}
           </h2>
-          <p className="text-xs text-brand-main/60 mt-1">
-            Found {displayedSellers.length} {displayedSellers.length === 1 ? "store" : "stores"}
-          </p>
-        </div>
-
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-brand-main/70 bg-brand-main/5 px-3 py-1.5 rounded-lg font-bold">
-          <Grid className="h-3.5 w-3.5" />
-          <span>Grid view</span>
         </div>
       </div>
 
       {/* Sellers Grid with Loading Skeleton Overlay */}
       {isLoading ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="h-80 bg-neutral-50 border border-neutral-100 rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : displayedSellers.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {displayedSellers.map((seller) => (
             <SellerCard
               key={seller.id}
@@ -256,14 +308,49 @@ export function SellerDirectory({
         </div>
       )}
 
-      <div className="mt-12 flex justify-center">
-        <Link
-          href="/sellers"
-          className="inline-flex px-6 py-3.5 bg-brand-main text-white font-bold rounded-xl hover:bg-brand-main/90 shadow-md shadow-brand-main/10 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
-        >
-          View All Sellers →
-        </Link>
-      </div>
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-3 mt-12 pt-8 border-t border-neutral-100">
+          {currentPage > 0 ? (
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              className="flex items-center justify-center w-10 h-10 border border-neutral-200 bg-white rounded-full text-brand-main hover:bg-neutral-50 hover:border-brand-main/20 hover:-translate-x-0.5 transition-all duration-200 shadow-sm cursor-pointer"
+              title="Previous Page"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          ) : (
+            <div className="flex items-center justify-center w-10 h-10 border border-neutral-100 bg-neutral-50 rounded-full text-neutral-300 pointer-events-none" />
+          )}
+
+          <div className="flex items-center gap-1.5 text-xs font-bold text-brand-main/60 bg-brand-main/5 px-4 py-2 rounded-full border border-neutral-100">
+            <span>Page</span>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              value={pageInputVal}
+              onChange={(e) => setPageInputVal(e.target.value)}
+              onBlur={handlePageInputSubmit}
+              onKeyDown={handleKeyDown}
+              className="w-10 h-6 text-center bg-white border border-neutral-200 rounded text-brand-main font-extrabold focus:outline-none focus:border-brand-highlight focus:ring-1 focus:ring-brand-highlight/20 transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+            <span>of {totalPages}</span>
+          </div>
+
+          {currentPage < totalPages - 1 ? (
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              className="flex items-center justify-center w-10 h-10 border border-neutral-200 bg-white rounded-full text-brand-main hover:bg-neutral-50 hover:border-brand-main/20 hover:translate-x-0.5 transition-all duration-200 shadow-sm cursor-pointer"
+              title="Next Page"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          ) : (
+            <div className="flex items-center justify-center w-10 h-10 border border-neutral-100 bg-neutral-50 rounded-full text-neutral-300 pointer-events-none" />
+          )}
+        </div>
+      )}
     </div>
   );
 }

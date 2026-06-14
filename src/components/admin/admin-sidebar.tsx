@@ -25,7 +25,13 @@ export function AdminSidebar() {
 
   return (
     <aside className="w-56 border-r border-sidebar-border bg-sidebar text-sidebar-foreground min-h-screen p-4 flex flex-col">
-      <Link href="/admin/dashboard" className="font-bold text-lg mb-8 block text-sidebar-foreground">StoreSutra Admin</Link>
+      <Link href="/admin/dashboard" className="flex items-center gap-2 font-extrabold text-xl tracking-tight mb-8 text-sidebar-foreground hover:opacity-90 transition-opacity duration-200">
+        <img src="/logo.png" alt="StoreSutra Logo" className="h-9 w-9 object-contain shrink-0" />
+        <span>
+          Store<span className="bg-gradient-to-r from-brand-yellow to-brand-cream bg-clip-text text-transparent">Sutra</span>
+        </span>
+        <span className="text-xs font-semibold px-2 py-0.5 rounded bg-brand-yellow/15 text-brand-yellow align-middle ml-1 border border-brand-yellow/10">Admin</span>
+      </Link>
       <nav className="flex-1 space-y-1">
         {links.map(({ href, label, icon: Icon }) => (
           <Link
