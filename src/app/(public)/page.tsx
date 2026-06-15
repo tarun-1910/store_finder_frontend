@@ -24,10 +24,30 @@ export default async function HomePage() {
     console.log("Sellers API success");
     console.log("Categories API success");
 
+
+    console.log(
+        "SELLERS RESPONSE:",
+        JSON.stringify(sellersRes.data, null, 2)
+      );
+
+      console.log(
+        "CATEGORIES RESPONSE:",
+        JSON.stringify(catRes.data, null, 2)
+      );
+
+
+
     sellers = sellersRes.data.data.content || [];
     categories = catRes.data.data || [];
     totalPages = sellersRes.data.data.totalPages || 0;
     totalElements = sellersRes.data.data.totalElements || 0;
+
+    
+    console.log("SELLERS LENGTH:", sellers.length);
+    console.log("CATEGORIES LENGTH:", categories.length);
+
+
+
   } catch (error) {
     console.error("Homepage fetch failed:", error);
   }
