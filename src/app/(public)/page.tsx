@@ -56,12 +56,24 @@ export default async function HomePage() {
         </div>
       </section>
 
+
+
+      <div>
+            Sellers Loaded: {sellers.length}
+          </div>
+
+          <div>
+            Categories Loaded: {categories.length}
+          </div>
+
       <SellerDirectory 
         initialSellers={sellers} 
         categories={categories} 
         initialTotalPages={totalPages}
         initialTotalElements={totalElements}
       />
+
+        
     </div>
   );
 }
